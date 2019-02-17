@@ -10,20 +10,24 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
+import javax.annotation.Nullable;
+
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = EndpointsAsyncTask.class.getSimpleName();
     private static MyApi myApiService = null;
 
     OnJokeRecieveListener mJokeRecieveListener;
+    @Nullable private static SimpleIdlingResource mIdlingResource;
 
     private EndpointsAsyncTask(OnJokeRecieveListener mlistener){
         mJokeRecieveListener = mlistener;
     }
 
     // method to create instance of JokeAsyncTask
-    public static void getInstance(OnJokeRecieveListener listener) {
+    public static void getInstance(OnJokeRecieveListener listener, SimpleIdlingResource idlingResource) {
         new EndpointsAsyncTask(listener).execute();
+        mIdlingResource = idlingResource;
     }
 
     @Override
@@ -34,6 +38,9 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
+        if (mIdlingResource != null) {
+            mIdlingResource.setIdleState(false);
+        }
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -64,5 +71,8 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         mJokeRecieveListener.onFinishListener(result);
+        if (mIdlingResource != null) {
+            mIdlingResource.setIdleState(true);
+        }
     }
 }

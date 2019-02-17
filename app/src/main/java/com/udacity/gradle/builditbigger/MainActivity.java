@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar mProgressbar;
     Button mTellJokeButton;
 
+    @Nullable private SimpleIdlingResource mIdlingResource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       // new EndpointsAsyncTask1().execute(new Pair<Context, String>(this, "Asha"));
-       // new EndpointsAsyncTask(this).execute();
     }
 
 
@@ -91,12 +95,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailedListener() {
                 mProgressbar.setVisibility(View.GONE);
             }
-        });
-
-        //new EndpointsAsyncTask1().execute(new Pair<Context, String>(this, "Asha"));
-
-
-        //Toast.makeText(this, myJokes.getJokes(), Toast.LENGTH_SHORT).show();
+        },mIdlingResource );
 
     }
 
@@ -104,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DisplayJokeActivity.class);
         intent.putExtra(JOKE, joke);
         startActivity(intent);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 
 
@@ -148,4 +156,6 @@ class EndpointsAsyncTask1 extends AsyncTask<Pair<Context, String>, Void, String>
     protected void onPostExecute(String result) {
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
+
+
 }
