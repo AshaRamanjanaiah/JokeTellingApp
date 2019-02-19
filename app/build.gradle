@@ -32,6 +32,21 @@ android {
         }
     }
 
+    flavorDimensions "joke"
+
+    productFlavors{
+        free{
+            applicationId "com.udacity.gradle.builditbigger.free"
+            dimension "joke"
+            versionNameSuffix "-free"
+        }
+        paid{
+            applicationId "com.udacity.gradle.builditbigger.paid"
+            dimension "joke"
+            versionNameSuffix "-paid"
+        }
+    }
+
 }
 
 dependencies {
