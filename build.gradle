@@ -20,3 +20,16 @@ allprojects {
         google()
     }
 }
+
+task startBackend (dependsOn: ":backend:appengineStart") {
+    doLast {
+        println "Started the backend!"
+    }
+}
+
+task customTestTask {
+    dependsOn("startBackend")
+    mustRunAfter("startBackend")
+    dependsOn("app:connectedAndroidTest")
+    finalizedBy ":backend:appengineStop"
+}
