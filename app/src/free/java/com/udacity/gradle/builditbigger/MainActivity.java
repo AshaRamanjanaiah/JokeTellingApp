@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.android.displayjokes.DisplayJokeActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressBar mProgressbar;
     Button mTellJokeButton;
+
+    // create Interstitial ad object
+    private InterstitialAd mInterstitialAd;
 
     @Nullable private SimpleIdlingResource mIdlingResource;
 
@@ -34,9 +40,27 @@ public class MainActivity extends AppCompatActivity {
         mProgressbar = (ProgressBar) findViewById(R.id.progress_bar);
         mTellJokeButton = (Button) findViewById(R.id.bt_tell_joke);
 
+        mInterstitialAd = new InterstitialAd(this);
+        // using test Ads unit ID
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        //create Ad request
+        AdRequest adRequest =  new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        //load and Ad
+        mInterstitialAd.loadAd(adRequest);
+
         mTellJokeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // show the Ad
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d(TAG, "The interstitial wasn't loaded yet.");
+                }
                 tellJoke();
             }
         });
