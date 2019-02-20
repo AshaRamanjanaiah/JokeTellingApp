@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         mInterstitialAd = new InterstitialAd(this);
         // using test Ads unit ID
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_ad_id));
 
         //create Ad request
         AdRequest adRequest =  new AdRequest.Builder()

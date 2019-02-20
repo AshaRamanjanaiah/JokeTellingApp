@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -63,7 +64,8 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
             return myApiService.tellJoke().execute().getData();
         } catch (IOException e) {
             mJokeRecieveListener.onFailedListener();
-            return e.getMessage();
+            Log.e(TAG, "Failed to get response from the server");
+            return "";
         }
     }
 

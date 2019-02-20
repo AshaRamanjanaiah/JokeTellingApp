@@ -6,6 +6,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.android.jokes.MyJokes;
 import com.udacity.gradle.builditbigger.MainActivity;
 import com.udacity.gradle.builditbigger.R;
 
@@ -40,8 +41,12 @@ public class EndpointsAsyncTaskTest {
 
     @Test
     public void displayJokeTest(){
+
+        MyJokes myJokes = new MyJokes();
+        String newJoke = myJokes.getJokes();
+
         onView(withId(R.id.bt_tell_joke)).perform(click());
-        onView(withId(R.id.tv_display_joke)).check(matches(withText("funny joke")));
+        onView(withId(R.id.tv_display_joke)).check(matches(withText(newJoke)));
     }
 
     // Remember to unregister resources when not needed to avoid malfunction.
