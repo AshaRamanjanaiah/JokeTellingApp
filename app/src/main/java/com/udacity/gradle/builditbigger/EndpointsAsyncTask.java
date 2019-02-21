@@ -63,7 +63,6 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return myApiService.tellJoke().execute().getData();
         } catch (IOException e) {
-            mJokeRecieveListener.onFailedListener();
             Log.e(TAG, "Failed to get response from the server");
             return "";
         }
@@ -72,7 +71,11 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        mJokeRecieveListener.onFinishListener(result);
+        if(result == null || result.isEmpty()){
+            mJokeRecieveListener.onFailedListener();
+        }else {
+            mJokeRecieveListener.onFinishListener(result);
+        }
         if (mIdlingResource != null) {
             mIdlingResource.setIdleState(true);
         }
