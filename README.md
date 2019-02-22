@@ -14,7 +14,7 @@ behavior of the Gradle build tool, allowing automation of repetitive tasks.
 Particularly, factoring functionality into libraries and creating product
 flavors allow for much bigger projects with minimal added complexity.
 
-## What Will I Learn?
+## What did I Learn?
 
 I have learnt the role of Gradle in building Android Apps and how to use
 Gradle to manage apps of increasing complexity. I have learnt to:
@@ -26,7 +26,33 @@ Gradle to manage apps of increasing complexity. I have learnt to:
 * Use the Gradle App Engine plugin to deploy a backend
 * Configure an integration test suite that runs against the local App Engine development server
 
-## How to I Complete this Project?
+## Install
+
+To run this app:
+
+Run a local instance of the GCE server. 
+
+In order to do that you need to install the Cloud SDK:
+
+https://cloud.google.com/sdk/docs/
+
+Once installed, follow the instructions in the Setup Cloud SDK section at:
+
+https://cloud.google.com/endpoints/docs/frameworks/java/migrating-android
+
+Note: do not follow the rest of steps in the migration guide, only the Setup Cloud SDK.
+
+Start or stop your local server by using the gradle tasks.
+
+Once your local GCE server is started you should see the following at 
+[localhost:8080](http://localhost:8080)
+
+<img src="https://raw.githubusercontent.com/GoogleCloudPlatform/gradle-appengine-templates/77e9910911d5412e5efede5fa681ec105a0f02ad/doc/img/devappserver-endpoints.png">
+
+Now you are ready to install and run the app. 
+
+
+## How Did I Completed this Project?
 
 ### Step 0: Starting Point
 
@@ -40,40 +66,39 @@ Android SDK Manager.
 
 ### Step 1: Create a Java library
 
-Create a Java library that provides jokes. Create a new
+Created a Java library that provides jokes. Create a new
 Gradle Java project either using the Android Studio wizard, or by hand. Then
-introduce a project dependency between your app and the new Java Library. If
-you need review, check out demo 4.01 from the course code.
+introduced a project dependency between my app and the new Java Library.
 
 Make the button display a toast showing a joke retrieved from your Java joke
 telling library.
 
 ### Step 2: Create an Android Library
 
-Create an Android Library containing an Activity that will display a joke
-passed to it as an intent extra. Wire up project dependencies so that the
+Created an Android Library containing an Activity that will display a joke
+passed to it as an intent extra. Wired up project dependencies so that the
 button can now pass the joke from the Java Library to the Android Library.
 
 ### Step 3: Setup GCE
 
 This next task will be pretty tricky. Instead of pulling jokes directly from
-our Java library, we'll set up a Google Cloud Endpoints development server,
+our Java library, I have set up a Google Cloud Endpoints development server,
 and pull our jokes from there. 
 
-Before going ahead you will need to be able to run a local instance of the GCE 
-server. In order to do that you will have to install the Cloud SDK:
+Before going ahead I had to be able to run a local instance of the GCE 
+server. In order to do that I had to install the Cloud SDK:
 
 https://cloud.google.com/sdk/docs/
 
-Once installed, you will need to follow the instructions in the Setup Cloud SDK
+Once installed, I have followed the instructions in the Setup Cloud SDK
 section at:
 
 https://cloud.google.com/endpoints/docs/frameworks/java/migrating-android
 
-Note: You do not need to follow the rest of steps in the migration guide, only
+Note: I did not follow the rest of steps in the migration guide, only
 the Setup Cloud SDK.
 
-Start or stop your local server by using the gradle tasks as shown in the following
+Started or stopped my local server by using the gradle tasks as shown in the following
 screenshot:
 
 <img src="/FinalProject/GCE-server-gradle-tasks.png" height="500">
@@ -83,14 +108,14 @@ Once your local GCE server is started you should see the following at
 
 <img src="https://raw.githubusercontent.com/GoogleCloudPlatform/gradle-appengine-templates/77e9910911d5412e5efede5fa681ec105a0f02ad/doc/img/devappserver-endpoints.png">
 
-Now you are ready to continue! 
+Now I'm ready to continue! 
 
-Introduce a project dependency between your Java library 
-and your GCE module, and modify the GCE starter code to pull jokes from your Java library. 
-Create an AsyncTask to retrieve jokes using the template included int these 
+Introduced a project dependency between your Java library 
+and my GCE module, and modified the GCE starter code to pull jokes from my Java library. 
+Created an AsyncTask to retrieve jokes using the template included int these 
 [instructions](https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/77e9910911d5412e5efede5fa681ec105a0f02ad/HelloEndpoints#2-connecting-your-android-app-to-the-backend). 
-Make the button kick off a task to retrieve a joke, 
-then launch the activity from your Android Library to display it.
+Made the button kick off a task to retrieve a joke, 
+then launch the activity from my Android Library to display it.
 
 
 ### Step 4: Add Functional Tests
@@ -103,18 +128,14 @@ string. For a refresher on setting up Android tests(Esspresso Idling).
 Added free and paid product flavors to the app. Removed the ad (and any
 dependencies you can) from the paid flavor.
 
-## Optional Tasks
+### Step 6: Add Interstitial Ad
 
-For extra practice to make my project stand out, completed the following tasks.
-
-### Add Interstitial Ad
-
-Follow these instructions to add an interstitial ad to the free version.
-Display the ad after the user hits the button, but before the joke is shown.
+Followed these instructions to add an interstitial ad to the free version.
+Ad will be displayed after user hits the button, but before the joke is shown.
 
 https://developers.google.com/mobile-ads-sdk/docs/admob/android/interstitial
 
-### Add Loading Indicator
+### Step 7: Add Loading Indicator
 
 Added a loading indicator that is shown while the joke is being retrieved and
 disappears when the joke is ready. The following tutorial is a good place to
@@ -122,7 +143,7 @@ start:
 
 http://www.tutorialspoint.com/android/android_loading_spinner.htm
 
-### Configure Test Task
+### Step 8: Configure Test Task
 
 To tie it all together, created a Gradle task that:
 
